@@ -33,14 +33,6 @@ public class Produto {
 	@NotBlank(message = "O atributo Classifição Indicativa é obrigatório!")
 	private String classificacaoIndicativa;
 	
-	/* Classificações: 
-	   Livre
-	   Não recomendado para menores de 10 anos
-	   Não recomendado para menores de 13 anos
-	   Não recomendado para menores de 17 anos
-	   Apenas para adultos maiores de 18 anos
-	 */
-	
 	@NotNull(message = "O atributo Disponibilidade é obrigatório!")
 	private Boolean disponibilidade;
 
