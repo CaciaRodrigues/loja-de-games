@@ -1,5 +1,6 @@
 package com.generation.lojadegames.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
@@ -52,9 +54,8 @@ public class ProdutoController {
 		
 		List<Produto> produtos = produtoRepository.findAllByOrderByPrecoAsc();
 		
-		if (produtos.isEmpty()) {
+		if (produtos.isEmpty()) 
 			return ResponseEntity.noContent().build();
-		}
 		
 		return ResponseEntity.ok(produtos);
 	}
@@ -90,8 +91,40 @@ public class ProdutoController {
 		
 		 
 	}
+	
+	@GetMapping("/buscar")
+	public ResponseEntity<List<Produto>> buscarPorNome (@RequestParam String nome) {
+		List<Produto> produtos = produtoRepository.findByNomeContainingIgnoreCase(nome);
+		
+		if(produtos.isEmpty()) 
+			return ResponseEntity.noContent().build();
+		
+		return ResponseEntity.ok(produtos);
+	}
+	
+	@GetMapping("/filtrar-preco")
+	public ResponseEntity<List<Produto>> filtrarPorFaixaDePreco(@RequestParam BigDecimal min, @RequestParam BigDecimal max) {
+		List<Produto> produtos = produtoRepository.findByPrecoBetween(min, max);
+		
+		if(produtos.isEmpty())
+			return ResponseEntity.noContent().build();
+		
+		return ResponseEntity.ok(produtos);
+	}
+	
 
 }
+
+/*
+ TODO: 
+ 1 - Buscar por nome parcial ✔
+ 2 - Filtrar por faixa de preço ✔
+ 3 - Buscar por categoria
+ 4 - Contar  produtos por categoria
+ 5 - Buscar produto por nome
+ 6 - Buscar o produto mais barato e o mais caro
+ 7 - Listar produtos por preço em ordem decrescente
+ */
 
 
 
