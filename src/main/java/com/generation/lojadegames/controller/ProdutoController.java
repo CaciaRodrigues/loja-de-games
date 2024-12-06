@@ -49,8 +49,8 @@ public class ProdutoController {
 		
 	}
 	
-	@GetMapping("/ordenadospreco")
-	public ResponseEntity<List<Produto>> listarProdutosOrdenadosPreco() {
+	@GetMapping("/ordem-menor-preco")
+	public ResponseEntity<List<Produto>> listarProdutosOrdenadosMenorPreco() {
 		
 		List<Produto> produtos = produtoRepository.findAllByOrderByPrecoAsc();
 		
@@ -112,6 +112,16 @@ public class ProdutoController {
 		return ResponseEntity.ok(produtos);
 	}
 	
+	@GetMapping("/ordem-maior-preco")
+	public ResponseEntity<List<Produto>> listarProdutosOrdenadosMaiorPreco () {
+		List<Produto> produtos = produtoRepository.findAllByOrderByPrecoDesc();
+		
+		if(produtos.isEmpty())
+			return ResponseEntity.noContent().build();
+		
+		return ResponseEntity.ok(produtos);
+	}
+	
 
 }
 
@@ -123,7 +133,7 @@ public class ProdutoController {
  4 - Contar  produtos por categoria
  5 - Buscar produto por nome
  6 - Buscar o produto mais barato e o mais caro
- 7 - Listar produtos por preço em ordem decrescente
+ 7 - Listar produtos por preço em ordem decrescente ✔
  */
 
 
